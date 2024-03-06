@@ -93,7 +93,7 @@ namespace Snake1
                 Settings.directions = "up";
             }
 
-            for(int i = Snake.Count; i >= 0; i--)
+            for(int i = Snake.Count - 1; i >= 0; i--)
             {
                 if (i == 0)
                 {
@@ -111,10 +111,43 @@ namespace Snake1
                         case "down":
                             Snake[i].Y++;
                             break;
-
+                    }
+                    if (Snake[i].X < 0)
+                    {
+                        Snake[i].X = maxwidth;
+                    }
+                    if (Snake[i].X > maxwidth)
+                    {
+                        Snake[i].X = 0;
+                    }
+                    if (Snake[i].Y < 0)
+                    {
+                        Snake[i].Y = maxheight;
+                    }
+                    if (Snake[i].Y > maxheight)
+                    {
+                        Snake[i].Y = 0;
+                    }
+                    if (Snake[i].X == food.X && Snake[i].Y == food.Y)
+                    {
+                        EatFood();
+                    }
+                    for(int j=1; j<Snake.Count; j++)
+                    {
+                        if (Snake[i].X == Snake[j].X && Snake[i].Y == Snake[j].Y)
+                        {
+                            GameOver();
+                        }
                     }
                 }
+                else
+                {
+                    Snake[i].X = Snake[i - 1].X;
+                    Snake[i].Y = Snake[i - 1].Y;
+                }
             }
+
+            pictureBox1.Invalidate();
         }
 
         private void UpdatePictureBoxGraphics(object sender, PaintEventArgs e)
@@ -133,10 +166,10 @@ namespace Snake1
                     snakeColour = Brushes.Yellow;
                 }
 
-                canvas.FillRectangle(snakeColour, new Rectangle
+                canvas.FillEllipse(snakeColour, new Rectangle
                     (
-                        Snake[i].X = Settings.Width,
-                        Snake[i].Y = Settings.Height,
+                        Snake[i].X * Settings.Width,
+                        Snake[i].Y * Settings.Height,
                         Settings.Width, Settings.Height
                     )
                     );
@@ -144,8 +177,8 @@ namespace Snake1
 
 
             }
-            canvas.FillEllipse(Brushes.DarkRed, new Rectangle(food.X = Settings.Width,
-                        food.Y = Settings.Height,
+            canvas.FillEllipse(Brushes.DarkRed, new Rectangle(food.X * Settings.Width,
+                        food.Y * Settings.Height,
                         Settings.Width, Settings.Height
                     )
                     );
@@ -158,7 +191,6 @@ namespace Snake1
 
             Snake.Clear();
             button1.Enabled = false;
-            button2.Enabled = false;
             score = 0;
             label1.Text = "Score " + score;
 
@@ -179,11 +211,30 @@ namespace Snake1
 
         private void EatFood()
         {
+            score += 1;
+            label1.Text = "Score " + score;
 
+            Circle body = new Circle
+            {
+                X = Snake[Snake.Count - 1].X,
+                Y = Snake[Snake.Count - 1].Y
+            };
+            Snake.Add(body);
+
+            food = new Circle { X = rand.Next(2, maxwidth), Y = rand.Next(2, maxheight) };
         }
         private void GameOver()
         {
+            gametimer.Stop();
+            button1.Enabled = true;
 
+            if(score > highscore)
+            {
+                highscore = score;
+                label2.Text = "High Score" + Environment.NewLine + highscore;
+                label2.ForeColor = Color.Black;
+                label2.TextAlign = ContentAlignment.MiddleCenter;
+            }
         }
     }
 }

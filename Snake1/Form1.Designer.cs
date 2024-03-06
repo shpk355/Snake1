@@ -30,7 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             button1 = new Button();
-            button2 = new Button();
             pictureBox1 = new PictureBox();
             label1 = new Label();
             label2 = new Label();
@@ -43,32 +42,20 @@
             button1.BackColor = Color.Yellow;
             button1.BackgroundImageLayout = ImageLayout.Center;
             button1.FlatStyle = FlatStyle.Popup;
-            button1.Location = new Point(645, 38);
+            button1.Location = new Point(645, 36);
             button1.Name = "button1";
-            button1.Size = new Size(115, 44);
+            button1.Size = new Size(115, 46);
             button1.TabIndex = 0;
             button1.Text = "Start";
             button1.UseVisualStyleBackColor = false;
             button1.Click += StartGame;
-            // 
-            // button2
-            // 
-            button2.BackColor = Color.FromArgb(0, 192, 0);
-            button2.FlatStyle = FlatStyle.Popup;
-            button2.Location = new Point(645, 88);
-            button2.Name = "button2";
-            button2.Size = new Size(115, 49);
-            button2.TabIndex = 1;
-            button2.Text = "Snap";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += TakeSnapShot;
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Black;
             pictureBox1.Location = new Point(12, 12);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(580, 565);
+            pictureBox1.Size = new Size(560, 565);
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             pictureBox1.Paint += UpdatePictureBoxGraphics;
@@ -77,7 +64,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label1.Location = new Point(598, 172);
+            label1.Location = new Point(618, 177);
             label1.Name = "label1";
             label1.Size = new Size(162, 54);
             label1.TabIndex = 3;
@@ -107,7 +94,6 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
-            Controls.Add(button2);
             Controls.Add(button1);
             Name = "Form1";
             Text = "Snake";
@@ -121,7 +107,6 @@
         #endregion
 
         private Button button1;
-        private Button button2;
         private PictureBox pictureBox1;
         private Label label1;
         private Label label2;
